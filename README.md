@@ -6,4 +6,5 @@ Simulates the window idle times and student wait times in a registrar office. Ti
 -change nameOfFileToReadOver with the name of the file to be inputed as a command line argument
 
 References:
+
 1.) For bubble sort: //Bubble sort from least to greatest, info on this algorithm is from: https://www.geeksforgeeks.org/bubble-sort/
