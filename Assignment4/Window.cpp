@@ -6,6 +6,7 @@ Window::Window() {
   isOpen = true;
   timeWindowHasBeenIdleFor = 0;
   timeWindowNeedsForClient = 0;
+  windowHasBeenIdleForMoreThanMaxIdleTime = false;
 
 }
 
@@ -74,5 +75,19 @@ void Window::setTimeWindowNeedsForClient(int timeWindowNeedsForClient) {
 int Window::getTimeWindowNeedsForClient() {
 
   return this->timeWindowNeedsForClient;
+
+}
+
+//mutator method for setting windowHasBeenIdleForMoreThanMaxIdleTime
+void Window::setWindowHasBeenIdleForMoreThanMaxIdleTime(bool windowHasBeenIdleForMoreThanMaxIdleTime) {
+
+  this->windowHasBeenIdleForMoreThanMaxIdleTime = windowHasBeenIdleForMoreThanMaxIdleTime;
+
+}
+
+//accessor method for seeing the value of windowHasBeenIdleForMoreThanMaxIdleTime
+const bool&  Window::getWindowHasBeenIdleForMoreThanMaxIdleTime(){
+
+  return this->windowHasBeenIdleForMoreThanMaxIdleTime;
 
 }

@@ -24,6 +24,10 @@ private:
   void sendStudentToWindow(Window& window); //simulates the sending of a student to the provided open window
   void checkIfWindowShouldBeOpened(Window& window); //checks and opens the provided window if it is current closed and needs to be opened due to being finished with helping a student
   void getStats(); //uses the StatisticsManager to print out stats on window idle times and student wait times
+  void checkIfWindowHasBeenIdleForOverMaxIdleTimeOf(unsigned int time, Window& window); //checks if the current window has been idle for over the specified time, so that the number of windows idle for more than this time can be correctly counted later
+
+  //determines the correct amount of windows that were idle for over 5 mins
+  unsigned int determineNumberOfWindowsThatWaitedOverMaxIdleTime();
 
 public:
   RegistrarOffice(); //default constructor

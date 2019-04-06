@@ -75,6 +75,16 @@ void RegistrarOffice::openWindows(int numberOfWindowsToOpen) {
 
 }
 
+//checks if the current window has been idle for over the specified time, so that the number of windows idle for more than this time can be correctly counted later
+void RegistrarOffice::checkIfWindowHasBeenIdleForOverMaxIdleTimeOf(unsigned int time, Window& window) {
+
+  if ((window.getTimeWindowHasBeenIdleFor() > time) && (window.getWindowHasBeenIdleForMoreThanMaxIdleTime() == false)) {
+
+    window.setWindowHasBeenIdleForMoreThanMaxIdleTime(true);
+
+  }
+
+}
 //launches the simulation, this is where the while loop is placed so that students can be helped until there is no more students in line
 void RegistrarOffice::beginSimulation() {
 
@@ -84,6 +94,7 @@ void RegistrarOffice::beginSimulation() {
     for (int i = 0; i < numberOfWindows; i++) {
 
       checkIfWindowShouldBeOpened(windows[i]);
+      checkIfWindowHasBeenIdleForOverMaxIdleTimeOf(5, windows[i]);
 
       if (line.empty() == false) {
 
@@ -144,10 +155,10 @@ void RegistrarOffice::beginSimulation() {
   getStats();
 
   //FOR DEBUGGING:
-  std::cout<<"The windows had the following idle times:"<<std::endl;
+  /*std::cout<<"The windows had the following idle times:"<<std::endl;
   windowIdleTimes.printList();
   std::cout<<"The students had the following wait times:"<<std::endl;
-  studentWaitTimes.printList();
+  studentWaitTimes.printList();*/
 
 }
 
@@ -158,16 +169,36 @@ void RegistrarOffice::getStats() {
   StatisticsManager windowStats(windowIdleTimes);
 
   cout<<"STUDENT STATISTICS:"<<endl;
-  cout<<"The mean student wait time was: "<<studentStats.getMean()<<endl;
-  cout<<"The median student wait time was: "<<studentStats.getMedian()<<endl;
-  cout<<"The longest student wait time was: "<<studentStats.getMaximum()<<endl;
+  cout<<"The mean student wait time was: "<<studentStats.getMean()<<" minutes."<<endl;
+  cout<<"The median student wait time was: "<<studentStats.getMedian()<<" minutes."<<endl;
+  cout<<"The longest student wait time was: "<<studentStats.getMaximum()<<" minutes."<<endl;
   cout<<"The number of students waiting over 10 minutes was: "<<studentStats.getFrequencyOfValuesGreaterThan(10)<<endl;
   cout<<endl;
   cout<<"WINDOW STATISTICS: "<<endl;
-  cout<<"The mean window idle time was: "<<windowStats.getMean()<<endl;
-  cout<<"The median window time was: "<<windowStats.getMedian()<<endl;
-  cout<<"The longest window idle time was: "<<windowStats.getMaximum()<<endl;
-  cout<<"The number of windows idle for over 5 minutes was: "<<windowStats.getFrequencyOfValuesGreaterThan(5);
+  cout<<"The mean window idle time was: "<<windowStats.getMean()<<" minutes."<<endl;
+  cout<<"The median window time was: "<<windowStats.getMedian()<<" minutes."<<endl;
+  cout<<"The longest window idle time was: "<<windowStats.getMaximum()<<" minutes."<<endl;
+  cout<<"The number of windows idle for over 5 minutes was: "<<determineNumberOfWindowsThatWaitedOverMaxIdleTime();
   cout<<endl;
+
+}
+
+//determines the correct amount of windows that were idle for over 5 mins
+unsigned int RegistrarOffice::determineNumberOfWindowsThatWaitedOverMaxIdleTime() {
+
+  unsigned int frequency = 0;
+
+  for (int i = 0; i < numberOfWindows; i++) {
+
+    if (windows[i].getWindowHasBeenIdleForMoreThanMaxIdleTime()) {
+
+      //this window waited for over 5 mins
+      frequency++;
+
+    }
+
+  }
+
+  return frequency;
 
 }
