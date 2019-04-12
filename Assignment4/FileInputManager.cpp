@@ -43,7 +43,17 @@ void FileInputManager::ScanThroughFile(char const *commandLineArguments[], int a
 
       if (currentLineNumber == 0) {
 
-        office.openWindows(stoi(line));
+        //this is the line with the number of windows that need to exist in the office:
+        int numberOfWindows = stoi(line);
+        while (numberOfWindows <= 0) {
+
+          //there has to be at least 1 window in the office, otherwise the simulation might run on forever since students would just be waiting in line but there are no windows to take them in
+          cout<<"There needs to be at least 1 window open, please enter a valid number of windows:"<<endl;
+          cin>>numberOfWindows;
+
+        }
+        //office.openWindows(stoi(line));
+        office.openWindows(numberOfWindows);
 
       }
       else if (arrivalTime < 0){

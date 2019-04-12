@@ -90,7 +90,7 @@ void RegistrarOffice::beginSimulation() {
 
   while (line.empty() == false) {
 
-    //check for open windows:
+    //check for open windows, windows are handled from index 0 to numberOfWindows - 1, or from "top to bottom"
     for (int i = 0; i < numberOfWindows; i++) {
 
       checkIfWindowShouldBeOpened(windows[i]);
@@ -165,21 +165,31 @@ void RegistrarOffice::beginSimulation() {
 //uses the StatisticsManager to print out stats on window idle times and student wait times
 void RegistrarOffice::getStats() {
 
-  StatisticsManager studentStats(studentWaitTimes);
-  StatisticsManager windowStats(windowIdleTimes);
+  //if there was no students who arrived at all, than no stats should be calculated because the office will close immediately:
+  if (studentWaitTimes.empty() == false) {
 
-  cout<<"STUDENT STATISTICS:"<<endl;
-  cout<<"The mean student wait time was: "<<studentStats.getMean()<<" minutes."<<endl;
-  cout<<"The median student wait time was: "<<studentStats.getMedian()<<" minutes."<<endl;
-  cout<<"The longest student wait time was: "<<studentStats.getMaximum()<<" minutes."<<endl;
-  cout<<"The number of students waiting over 10 minutes was: "<<studentStats.getFrequencyOfValuesGreaterThan(10)<<endl;
-  cout<<endl;
-  cout<<"WINDOW STATISTICS: "<<endl;
-  cout<<"The mean window idle time was: "<<windowStats.getMean()<<" minutes."<<endl;
-  cout<<"The median window time was: "<<windowStats.getMedian()<<" minutes."<<endl;
-  cout<<"The longest window idle time was: "<<windowStats.getMaximum()<<" minutes."<<endl;
-  cout<<"The number of windows idle for over 5 minutes was: "<<determineNumberOfWindowsThatWaitedOverMaxIdleTime();
-  cout<<endl;
+    StatisticsManager studentStats(studentWaitTimes);
+    StatisticsManager windowStats(windowIdleTimes);
+
+    cout<<"STUDENT STATISTICS:"<<endl;
+    cout<<"The mean student wait time was: "<<studentStats.getMean()<<" minutes."<<endl;
+    cout<<"The median student wait time was: "<<studentStats.getMedian()<<" minutes."<<endl;
+    cout<<"The longest student wait time was: "<<studentStats.getMaximum()<<" minutes."<<endl;
+    cout<<"The number of students waiting over 10 minutes was: "<<studentStats.getFrequencyOfValuesGreaterThan(10)<<endl;
+    cout<<endl;
+    cout<<"WINDOW STATISTICS: "<<endl;
+    cout<<"The mean window idle time was: "<<windowStats.getMean()<<" minutes."<<endl;
+    cout<<"The median window time was: "<<windowStats.getMedian()<<" minutes."<<endl;
+    cout<<"The longest window idle time was: "<<windowStats.getMaximum()<<" minutes."<<endl;
+    cout<<"The number of windows idle for over 5 minutes was: "<<determineNumberOfWindowsThatWaitedOverMaxIdleTime();
+    cout<<endl;
+
+  }
+  else {
+
+    cout<<"No stats to compute, as there were no students who arrived at all."<<endl;
+
+  }
 
 }
 
