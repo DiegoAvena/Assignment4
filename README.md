@@ -1,4 +1,11 @@
 # Registrar's Office Simulator
+
+
+
+![registrarsOfficeScreenshot](https://user-images.githubusercontent.com/43594702/119756772-cff0db00-be58-11eb-9ee5-13d5ce86151a.png)
+
+[See it in action!](https://www.youtube.com/watch?v=ShaFSunT83w)
+
 Simulates the window idle times and student wait times in a registrar office. Time used here can be in any unit, but in this project the time is printed out as minutes.
 
 -To run with makefile, do: make run file=nameOfFileToReadOver
